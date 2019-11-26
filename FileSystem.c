@@ -33,10 +33,9 @@ typedef struct {
     unsigned int modtime;
 } Inode;
 
-typedef struct
-{
-        unsigned short inode;
-        char filename[14];
+typedef struct {
+    unsigned short inode;
+    char filename[14];
 } directoryEntry;
 
 superBlockType super;
@@ -44,3 +43,23 @@ int fd;
 char pwd[100];
 int curINodeNumber;
 char fileSystemPath[100];
+
+// function declarations for the main method to use
+void writeToBlock (int blockNumber, void* buffer, int nbytes);
+void writeToBlockOffset(int blockNumber, int offset, void* buffer, int nbytes);
+void readFromBlockOffset(int blockNumber, int offset, void* buffer, int nbytes);
+void addFreeBlock(int blockNumber);
+void getFreeBlock();
+void addFreeInode(int iNumber);
+int getFreeInode();
+void writeInode(int INumber, Inode inode);
+Inode getInode(int INumber);
+void createRootDirectory();
+void ls();
+void makeDirectory(char* directoryName);
+void changeDirectory(char* directoryName);
+void copyIn(char* sourcePath, char* filename);
+void copyOut(char* filename, char* destinationPath);
+void rm(char* filename);
+void initfs(char* path, int totalBlocks, int totalInodes);
+void quit();
