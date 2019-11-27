@@ -63,3 +63,15 @@ void copyOut(char* filename, char* destinationPath);
 void rm(char* filename);
 void initfs(char* path, int totalBlocks, int totalInodes);
 void quit();
+
+Inode getInode(int INumber) {
+    Inode inode;
+    lseek(fd, 2 * BLOCK_SIZE + INumber * INODE_SIZE, SEEK_SET);
+    read(fd, %inode, INODE_SIZE);
+    return inode;
+}
+
+void quit() {
+    close(fd);
+    exit(0);
+}
