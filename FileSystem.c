@@ -38,30 +38,33 @@ typedef struct {
     char filename[14];
 } directoryEntry;
 
-superBlockType super;
-int fd;
-char pwd[100];
-int curINodeNumber;
+superBlockType superBlock;
+int fileDescriptor, currentINodeNumber, totalINodesCount;
+char currentWorkingDirectory[100];
 char fileSystemPath[100];
 
 // function declarations for the main method to use
-void writeToBlock (int blockNumber, void* buffer, int nbytes);
-void writeToBlockOffset(int blockNumber, int offset, void* buffer, int nbytes);
-void readFromBlockOffset(int blockNumber, int offset, void* buffer, int nbytes);
-void addFreeBlock(int blockNumber);
-void getFreeBlock();
-void addFreeInode(int iNumber);
-int getFreeInode();
-void writeInode(int INumber, Inode inode);
-Inode getInode(int INumber);
-void createRootDirectory();
+void writeBufferToBlock(int blockNumber, void* buffer, int numberOfBytes);
+void writeToBlockWithOffset(int blockNumber, int offset, void* buffer, int numberOfBytes);
+void readFromBlockWithOffset(int blockNumber, int offset, void* buffer, int numberOfBytes);
+void addAFreeBlock(int blockNumber);
+void getAFreeBlock();
+void addAFreeInode(int iNumber);
+Inode getAnInode(int INumber);
+int getAFreeInode();
+void writeTheInode(int INumber, Inode inode);
+void initializeRootDirectory();
 void ls();
 void makeDirectory(char* directoryName);
+int findLastIndex(char str[100], char ch);  // String size (and currentWorkingDirectory size is hard-coded to 100 for now)
+void sliceString(const char * str, char * buffer, size_t startPosition, size_t endPosition);
 void changeDirectory(char* directoryName);
-void copyIn(char* sourcePath, char* filename);
-void copyOut(char* filename, char* destinationPath);
-void rm(char* filename);
-void initfs(char* path, int totalBlocks, int totalInodes);
+void copyIn(char* sourceFilePath, char* fileName);
+void copyOut(char* destinationFilePath, char* fileName);
+void removeFile(char* fileName);    // Implements the rm command
+void removeDirectory(char* directoryName);
+void openFileSystem(const char *fileName);
+void initfs(char* filePath, int totalNumberOfBlocks, int totalNumberOfINodes)
 void quit();
 
 Inode getInode(int INumber) {
