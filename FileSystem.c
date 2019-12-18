@@ -50,7 +50,7 @@ void readFromBlockWithOffset(int blockNumber, int offset, void* buffer, int numb
 void addAFreeBlock(int blockNumber);
 void getAFreeBlock();
 void addAFreeInode(int iNumber);
-Inode getAnInode(int INumber);
+Inode getInode(int INumber);
 int getAFreeInode();
 void writeTheInode(int INumber, Inode inode);
 void initializeRootDirectory();
@@ -69,12 +69,12 @@ void quit();
 
 Inode getInode(int INumber) {
     Inode inode;
-    lseek(fd, 2 * BLOCK_SIZE + INumber * INODE_SIZE, SEEK_SET);
-    read(fd, %inode, INODE_SIZE);
+    lseek(fileDescriptor, 2 * BLOCK_SIZE + INumber * INODE_SIZE, SEEK_SET);
+    read(fileDescriptor, %inode, INODE_SIZE);
     return inode;
 }
 
 void quit() {
-    close(fd);
+    close(fileDescriptor);
     exit(0);
 }
