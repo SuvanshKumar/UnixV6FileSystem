@@ -84,6 +84,24 @@ Inode getInode(int INumber) {
     return inode;
 }
 
+void writeBufferToBlock(int blockNumber, void* buffer, int numberOfBytes)
+{
+    lseek(fileDescriptor, BLOCK_SIZE * blockNumber, SEEK_SET);
+    write(fileDescriptor, buffer, numberOfBytes);
+}
+
+void writeToBlockWithOffset(int blockNumber, int offset, void* buffer, int numberOfBytes)
+{
+    lseek(fileDescriptor, (BLOCK_SIZE * blockNumber) + offset, SEEK_SET);
+    write(fileDescriptor, buffer, numberOfBytes);
+}
+
+void readFromBlockWithOffset(int blockNumber, int offset, void* buffer, int numberOfBytes)
+{
+    lseek(fileDescriptor, (BLOCK_SIZE * blockNumber) + offset, SEEK_SET);
+    read(fileDescriptor, buffer, numberOfBytes);
+}
+
 void quit() {
     close(fileDescriptor);
     exit(0);
